@@ -1,5 +1,7 @@
 package com.bae.todo.controller;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bae.todo.entity.Completed;
@@ -28,23 +31,22 @@ public class CompletedController {
 		this.service = service;
 	}
 	
-	@PostMapping("/addToComplete")
-	public ResponseEntity<Completed> createCompleted(@RequestBody Completed completed) {
-		Completed responseBody = this.service.createCompleted(completed);
-		ResponseEntity<Completed> response = new ResponseEntity<Completed>(responseBody, HttpStatus.CREATED);
-		return response;
+	@PostMapping(value = "/addToComplete" , consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.CREATED)
+	public Completed createCompleted(@RequestBody Completed completed) {
+		return service.createCompleted(completed);
 	}
 	
-	@DeleteMapping("/removeFromComplete/{id}")
-	public ResponseEntity<Completed> deleteItems(@PathVariable Integer id) {
-		boolean deleted = this.service.deleteItems(id, null);
-		if(deleted) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		} else {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
+//	@DeleteMapping("/removeFromComplete/{id}")
+//	public ResponseEntity<Completed> deleteItems(@PathVariable Integer id) {
+//		boolean deleted = this.service.deleteItems(id, null);
+//		if(deleted) {
+//			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//		} else {
+//			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
+//	
 	@GetMapping("/getAllCompleted")
 	public List<Completed> getAllCompleted() {
 		return this.service.getAllComplete(); 

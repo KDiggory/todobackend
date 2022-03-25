@@ -2,6 +2,7 @@ package com.bae.todo.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bae.todo.dto.ListNameDTO;
@@ -14,6 +15,7 @@ public class ListNameService {
 	
 	public ListNameRepo repo;
 	
+	@Autowired
 	public ListNameService(ListNameRepo repo) {
 		super();
 		this.repo = repo;
@@ -24,12 +26,12 @@ public class ListNameService {
 	
 	}
 	
-	public ListName updateListName(ListName list, Integer id) {
-		ListName toUpdate = this.repo.findById(id).get();
-		toUpdate.setName(list.getName());
-		toUpdate.setDescription(list.getDescription());
-		return this.repo.save(toUpdate);
-	}
+//	public ListName updateListName(ListName list, Integer id) {
+//		ListName toUpdate = this.repo.findById(id).get();
+//		toUpdate.setName(list.getName());
+//		toUpdate.setDescription(list.getDescription());
+//		return this.repo.save(toUpdate);
+//	}
 
 	public List<ListName> getAllLists() {
 		return this.repo.findAll();
@@ -49,12 +51,12 @@ public class ListNameService {
 		return this.repo.findByName(name); 
 	}
 	
-	private ListNameDTO mapToDTO(Items items) {
-	ListNameDTO dto = new ListNameDTO();
-	dto.setName(items.getName());
-	dto.setDescription(items.getDescription());
-	dto.setId(items.getId());
-	return dto;
-	}
+//	private ListNameDTO mapToDTO(Items items) {
+//	ListNameDTO dto = new ListNameDTO();
+//	dto.setName(items.getName());
+//	dto.setDescription(items.getDescription());
+//	dto.setId(items.getId());
+//	return dto;
+//	}
 
 }
